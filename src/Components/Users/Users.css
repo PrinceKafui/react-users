@@ -1,0 +1,12 @@
+.users {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    padding: 4.5rem;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bolder;
+    margin: 2em;
+}
