@@ -1,59 +1,51 @@
 import React, { Component } from "react";
-import Users from "./Components/Users/Users";
+import "./App.css";
 import Userform from "./Components/Userforms/Userform";
+import UserList from "./Components/UserList";
 
 class App extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            users: [
-                // {
-                //   name : "Prince",
-                //   email: "amexoprince@gmail",
-                //   gen: 18,
-                // },
-                // {
-                //   name : "Bella",
-                //   email: "bella@gmail",
-                //   gen: 13,
-                // },
-                // {
-                //   name : "Kafui",
-                //   email: "kafui@gmail.com",
-                //   gen: 16,
-                // },
-            ],
-        };
-    }
-
-    handleAddUser = (newUser) => {
-        this.setState({
-            users: [...this.state.users, newUser],
-        });
+    this.state = {
+      users: [],
     };
+  }
 
-    render() {
-        return ( <
-            div >
-            <
-            Userform addUser = { this.handleAddUser }
-            /> {
-                this.state.users.map((item, index) => {
-                    return ( <
-                        div >
-                        <
-                        Users name = { item.name }
-                        email = { item.email }
-                        gen = { item.gen }
-                        /> <
-                        /div>
-                    );
-                })
-            } <
-            /div>
-        );
-    }
+  handleAddUser = (newUser) => {
+    newUser.id = Math.random().toString();
+    this.setState({
+      users: [...this.state.users, newUser],
+    });
+  };
+
+  handleDeleteUser = (userId) => {
+    const savedusers = this.state.users.filter((user) => {
+      return user.id !== userId;
+    });
+    this.setState({ users: savedusers });
+  };
+
+  handleEditUser = (updatedUser) => {
+    this.setState({
+      users: this.state.users.map((user) =>
+        user.id === updatedUser.id ? updatedUser : user
+      ),
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <Userform addUser={this.handleAddUser} />
+        <UserList
+          users={this.state.users}
+          deleteUser={this.handleDeleteUser}
+          editUser={this.handleEditUser}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
